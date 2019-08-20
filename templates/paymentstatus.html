@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if response.RESPCODE == "01" %}
+<h1>Your payment for the your order {{response.ORDER_ID}} is successful</h1>
+<h2>Kindly wait for a few minutes </h2>
+
+{% else %}
+<h1>Payment failed</h1>
+{% endif %}
+{% endblock %}

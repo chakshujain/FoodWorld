@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}
+FOOD WORLD
+{% endblock %}
+
+
+{% block js %}
+{% load static %}
+<script src = "{% static "js/slicebox.js" %}"></script>
+
+{% endblock %}
+
+
+
+{% block content %}
+{% load static %}
+
+
+
+<div >
+
+        <ul id="sb-slider" class="sb-slider">
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2969141180" target="_blank"><img src="{% static 'images/1.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>WELCOME TO FOOD WORLD</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2968268187" target="_blank"><img src="{% static 'images/2.jpg' %}" alt="image2"/></a>
+            <div class="sb-description">
+              <h3>MONEY TO FOOD</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2968114825" target="_blank"><img src="{% static 'images/3.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>VEGETABLES FRUITS FOOD</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2968122059" target="_blank"><img src="{% static 'images/4.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>fOOD VALUE</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2969119944" target="_blank"><img src="{% static 'images/5.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>FAITHFUL MONEY INVESTMENT</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2968126177" target="_blank"><img src="{% static 'images/6.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>FOOD FOOD FOOOD</h3>
+            </div>
+          </li>
+          <li>
+            <a href="http://www.flickr.com/photos/strupler/2968945158" target="_blank"><img src="{% static 'images/7.jpg' %}" alt="image1"/></a>
+            <div class="sb-description">
+              <h3>WELCOME TO FOOD WORLD</h3>
+            </div>
+          </li>
+        </ul>
+
+        <div id="shadow" class="shadow"></div>
+
+        <div id="nav-arrows" class="nav-arrows">
+          <a href="#">Next</a>
+          <a href="#">Previous</a>
+        </div>
+
+
+      <form method="GET" action=".">
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="category">Vegginess</label>
+            <select id="vegginess" class="form-control" name="vegginess">
+              <option selected>Choose...</option>
+              {% for i in vegginess  %}
+              <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="dishOrigin">Dish Origin</label>
+            <select id="dishOrigin" class="form-control" name="dishOrigin">
+              <option selected>Choose...</option>
+              {% for i in dishOrigin  %}
+              <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="startersOrMaincourse">Kind Of Food</label>
+            <select id="startersOrMaincourse" class="form-control" name="startersOrMaincourse">
+              <option selected>Choose...</option>
+              {% for i in startersOrMaincourse  %}
+              <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="spicyness">Spicyness</label>
+            <select id="spicyness" class="form-control" name="spicyness">
+              <option selected>Choose...</option>
+              {% for i in spicyness  %}
+              <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="budget">Budget</label>
+            <input type="text" name="budget" placeholder="0.00">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="particular_thing">Want Something particular</label>
+            <input type="text" name="particular_thing" placeholder="write here">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger">Search</button>
+      </form>
+
+      <hr />
+
+      <div class="row">
+          {% for dish in queryset %}
+          <div class="col-sm-4">
+          <div class="card align-items-center" style="width: 18rem;border-width: 5px;border-color: #AF601A">
+  <img class="card-img-top" width="150px" height="150px" src="media/{{dish.image}}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title " id = namepr{{dish.id}} style="font-weight: bolder;"> {{ dish.name }}</h5>
+    <p class="card-text" style="text-align: center;;font-weight: bolder;">Rs.{{dish.price}}</p>
+    <span id = "divpr{{dish.id}}" class = "divpr">
+      <a href="{% url 'productpage' dish.id %}">
+     <button id = "pr{{dish.id}}" class="btn btn-success">Quick View</button></a>
+    </span>
+    </div>
+  </div>
+</br>
+</div>
+<hr>
+          {% endfor %}
+      </div>
+
+
+{% endblock %}
