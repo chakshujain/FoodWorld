@@ -8,38 +8,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
-<link rel="shortcut icon" href="../favicon.ico">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/demo.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/slicebox.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
-    <script type="text/javascript" src="{% static 'js/jquery.slicebox.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/jquery.slicebox.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/modernizr.custom.46884.js' %}"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'template.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="{% static 'css/owner.css' %}">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
-
   </head>
 
 
 
   <body>
 
-
-
-
-      <main role="main" class="container">
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" style = "background-color:yellow">
   <a class="navbar-brand" href="{% url 'homepage' %}">Food world</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -47,81 +29,81 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+
+
+      {% if user.is_authenticated %}
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'cart' %}">Cart(<span id = "cart">{{cartcount}}</span>) </a>
-
-
-
+        <a class="nav-link" href="{% url 'homepage' %}">{{username}}</a>
       </li>
+      {% if order %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <button id = "mybtn" class="nav-link">Prepare Bill</button>
       </li>
-
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+      {% else %}
+      <li class = "nav-item">
+        <a class = "nav-link" href="{% url 'login' %}">Login</a>
+      </li>
+      <li class = "nav-item">
+        <a class = "nav-link" href="{% url 'signup' %}">Signup</a>
+      </li>
+      {% endif %}
+      <li class="nav-item active float-right">
+        <a class="nav-link" href="{% url 'cart' %}">Cart(<span id = "cart">{{cartcount}}</span>) </a>
+      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
   </div>
 </nav>
+<div id="myModal" class="modal">
 
-    </main>
-
-{% block content %}{% endblock %}
-
-
-
-
-
-
-
-
-
-<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
-
-
-      <div id="contact" class="container">
-  <h3 class="text-center" style="font-size:50px;color: black">Contact</h3>
-  <p class="text-center" style="font-size: 25px;color: black;font-style: bold;"><em>We love our Customers</em></p>
-
-  <div class="row">
-    <div class="col-md-4">
-      <p style="font-size: 22px;color: black">DROP A COMPLAIN ,QUERY OR SUGGESTONS.</p>
-      <p style="font-size: 22px;color: black"><span class="glyphicon glyphicon-map-marker"></span>MMU,MULLANA</p>
-      <p style="font-size: 22px;color: black"><span class="glyphicon glyphicon-phone"></span>Phone:0956478292</p>
-      <p style="font-size: 22px;color: black"><span class="glyphicon glyphicon-envelope"></span>Email: mmu@gmail.com</p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-        </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-        </div>
-      </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea>
-      <br>
-      <div class="row">
-        <div class="col-md-12 form-group">
-          <button class="btn pull-right" type="submit">Send</button>
-        </div>
-      </div>
-    </div>
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form  action="payonline" method="post">
+        {% csrf_token %}
+      <input type="submit" name="" value="Pay Online">
+    </form>
+    <button><a href="{% url 'paylater' %}">Pay in Cash</a></button>
   </div>
 
-  <footer class="text-center">
-  <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a><br><br>
-</footer>
+</div>
 
-
-
-
-
+{% block content %}{% endblock %}
 {% block css %}{% endblock %}
+<script type="text/javascript">
 
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+$('#mybtn').on('click',function(){
+  console.log("helloooooo");
+  modal.style.display = "block";
+})
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

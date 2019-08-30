@@ -1,0 +1,132 @@
+{% extends 'ownerbase.html' %}
+{% load static %}
+{% block css %}
+
+<link rel = "stylesheet" href="{% static 'css/owner.css' %}"/>
+
+{% endblock %}
+{% block content %}
+    {% if activeorder %}
+    <h2>Active Orders</h2>
+    <div class="container">
+      <div class="row">
+          {% for order in activeorder %}
+        <div class="col-sm-3">
+          <div class="card align-items-center" style="width: 18rem;border-width: 5px;border: 2px solid #808080b8;">
+            <img class="card-img-top" width="150px" height="150px" src="{% static "images/table_image.jpg" %}" alt="Card image cap"></<img>
+            <div class="card-body" style = "width:100%;">
+              <h5 class="card-title " id="namepr{{order.user}}" style="font-weight: bolder; text-align:center"> {{ order.user}}</h5>
+              ordered since
+              <h5>Billing Amount : {{order.total}}</h5>
+
+                <a href="{% url 'ownerproductpage' order.orderid %}">
+                  <button id="{{order.orderid}}" class="btn btn-success">See Details</button></a>
+                  <a href="{% url 'markdelivered' order.orderid %}">
+                    <button id="{{order.orderid}}" class="btn btn-success">Mark delivered</button></a>
+                    <span  id = "min{{order.orderid}}"></span>
+                    <span  id = "sec{{order.orderid}}"></span>
+                    <button class = 'mybtn' id="{{order.orderid}}">Open Modal</button>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>
+    </p>
+    </div>
+
+  </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <hr>
+    {% endif %}
+
+{% if completedorder %}
+
+<h2>Completed Orders</h2>
+<div class="container">
+  <div class="row">
+      {% for order in completedorder %}
+    <div class="col-sm-3">
+      <div class="card align-items-center" style="width: 18rem;border-width: 5px;border: 2px solid #808080b8;">
+        <img class="card-img-top" width="150px" height="150px" src="{% static "images/order_image.jpg" %}" alt="Card image cap"></<img>
+        <div class="card-body">
+          <h5 class="card-title " id=namepr{{order.user}} style="font-weight: bolder;"> {{ order.user}} {{order.created}}</h5>
+
+            <a href="{% url 'ownerproductpage' order.orderid %}">
+              <button id="{{order.orderid}}" class="btn btn-success">See Details</button></a>
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+
+    {% endblock %}
+
+
+{% block js %}
+<script>
+  // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementsByClassName("mybtn");
+console.log(btn);
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on the button, open the modal
+
+$('.mybtn').on('click',function(){
+  modal.style.display = "block";
+  orderid = this.id
+  {% for order in activeorder %}
+  console.log(orderid);
+  var temp  = "{{order.orderid}}"
+  if(temp == orderid){
+  console.log("worked");
+  function countdown(){
+    var currenttime = new Date().getTime()
+    var createdtime = new Date("{{order.created|escapejs}}").getTime()
+    var timesinceordered = currenttime - createdtime
+    var sec = Math.floor(timesinceordered/1000);
+    var min = Math.floor(sec/60);
+    sec = sec%60;
+    min = (min<10)? "0" + min : min ;
+    sec = (sec<10)? "0" + sec : sec;
+    console.log("{{order.orderid}}");
+    document.getElementById('min{{order.orderid}}').innerHTML = min + ":";
+    document.getElementById('sec{{order.orderid}}').innerHTML = sec;
+    console.log(min + ":" + sec);
+    setTimeout(countdown,1000)
+  }
+  countdown();
+}
+  {% endfor %}
+})
+
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+
+
+</script>
+
+{% endblock %}

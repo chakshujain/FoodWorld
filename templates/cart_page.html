@@ -1,71 +1,165 @@
 {% extends 'base.html' %}
-
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/owner.css' %}">
 
 {% block title %}
 Cart
 {% endblock %}
+
+
 {% block content %}
 {% if cartitems %}
 
-<div class="col-sm-8 col-sm-offset-2">
-<table class = "table">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<div style="width:auto;background-color: white;" align="center">
+<div class="col-md-12" style="background-color:none;border-radius:25px">
+    <div style="margin-left:1000px;margin-top: 30px">
+  <img src="{% static 'images/eatme.jpg' %}" alt="image1" height="90px" width="100px" />
+  </div>
+
+<div style="height:1000px;background-color:white;;">
+
+
+<div class="col-md-8" style="background-color:none;">
+
+
+<div class="container">
+
+
+
+
+
+
+
+<table class ="table" style = "width:80%; float:left;">
   <thead>
-  <tr><th style="width:20%;font-size: 20px">Dish View</th>
-              <th style="width:30%;font-size: 20px" >Dish Name</th>
-              <th style="width:8%;font-size: 20px">Price</th>
-              <th style="width:8%;font-size: 20px">Quantity</th>
-              <th style="width:20%;font-size: 20px" class="text-center">Subtotal</th>
-              <th style="width:14%"></th>
+      <tr>
+      <th style="width:4%;font-size: 20px">Sr.No.</th>
+        <th style="width:20%;font-size: 20px;text-align: center;">Dish View</th>
+
+              <th style="width:20%;font-size: 20px;text-align: center;" >Dish Name</th>
+              <th style="width:20%;font-size: 20px;text-align: center;">Price</th>
+              <th style="width:10%;font-size: 20px;text-align: center;">Quantity</th>
+              <th style="width:20%;font-size: 20px;text-align: center;">Subtotal</th>
+
+
             </tr>
 </thead>
 {% for item in cartitems %}
 <tr>
-<td ><img width="160px" height="160px" src="media/{{item.individualItem.image}}"></td>
+  <td  data-th="Sr.No." style="text-align: center;margin-top: 20px">1</td>
+<td data-th="Dish View"><img width="90px" height="70px"src="media/{{item.individualItem.image}}"></td>
 <td data-th="Dish Name">
                   <div class="col-sm-10">
                     <h4 class="nomargin" style="text-align: center;">{{item.individualItem.name}}</h4>
-                    <p style="text-align: center;">{{item.individualItem.description}} </p>
+
                   </div></td>
               <td data-th="Price">
                   <div class="col-sm-10">
                     <h4 class="nomargin" style="text-align: center;">{{item.individualItem.price}}</h4>
                   </div></td>
               <td data-th="Quantity">
-                <h4 class="nomargin" style="text-align: center;">{{item.quantity}}</h4> </td>
+                <h4 class="nomargin" style="text-align: center;"><a href="{% url 'minus' item.id %}"><span style = "margin-right:20px">-</span></a>{{item.quantity}}<a href="{% url 'add-to-cart' item.individualItem.id %}"><span style = "margin-left:20px">+</span></a></h4> </td>
               <td data-th="Subtotal">
              <div class="col-sm-10">
                     <h4 class="nomargin" style="text-align: center;">{{item.subtotal}}</h4></div>
-              <td class="actions" data-th="">
-            <button > <a id = "pr{{item.individualItem.id}}" class = "remove" href='{% url "remove-from-cart" item.id %}'><span class="glyphicon glyphicon-trash"></span> </a></button></td>
-              <!-- <td>{{item.individualItem.name}}
-  <td>{{item.individualItem.price}}</td>
-  <td>{{item.quantity}}</td>
-  <td>{{item.subtotal}}</td>
-  <td><a id = "pr{{item.individualItem.id}}" class = "remove" href='{% url "remove-from-cart" item.id %}'>Remove</a></td>-->
+              <td  class="actions" style="text-align: center;margin-top: 20px;cell">
+            <button > <a id = "pr{{item.individualItem.id}}"  href='{% url "remove-from-cart" item.id %}'>
+              <span ><img src="{% static 'images/remove.jpg' %}" alt="image1" height="20px" width="20px"></span> </a></button></td>
 </tr>
 {% endfor %}
+
+
+
+
 <tfoot>
             <tr class="visible-xs">
 
             </tr>
             <tr>
-              <td><a href="{% url 'homepage' %}" class="btn btn-danger"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-              <td colspan="2" class="hidden-xs"></td>
-              <td></td>
 
-              <td style="font-size: 16.5px;font-weight: bolder;color: #CD5C5C">Total: {{cart.total}}</td>
-              <!-- <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td> -->
+              <td colspan="2"><a href="{% url 'homepage' %}" class="btn btn-danger">Continue Shopping</a></td>
+              <td colspan="2" class="hidden-xs"></td>
+
+
+
+              <td colspan="2" style="font-size:24px;font-weight: bolder;color: black;">Total: {{cart.total}}</td>
+
+             <td>
+
+
+  <!-- Trigger/Open The Modal -->
+<button id="myBtn">Prepare bill</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <form action="payonline" method="post" style ="">
+      {% csrf_token %}
+    <span class="close">&times;</span>
+    <input class = "btn btn-success" type="submit" name="payonline" value="Pay online">
+    </form>
+    <a href="{% url 'paylater' %}" class="btn btn-success btn-block" style="align-self: center;width: 150px">Pay in cash</a>
+  </div>
+
+</div>
+
+
+</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td><td></td>
+              <td> <a href="{% url 'paylater' %}" class="btn btn-success btn-block" style="align-self: center;width: 150px">Order but pay later</a></td>
             </tr>
 </tfoot>
 </table>
-<form class="form-control" action="checkout" method="post">
-  {% csrf_token %}
-  <input type="submit" name="checkout" value="Checkout">
-</form>
+
+
+</div>
+
 </div>
 
 {% else %}
 <h1>Your cart is empty</h1>
 {% endif %}
+</div>
+</div>
 
+<script>
+
+  // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+</script>
 {% endblock %}

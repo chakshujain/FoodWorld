@@ -3,42 +3,121 @@
 {% block title %}
 {{queryset.name}}
 {% endblock %}
+{}
 {% block content %}
-<table class = "table">
-  <thead>
-  <tr><th style="width:23%;font-size: 20px;color:blue">ADD TO FAVOURITES</th>
-              <th style="width:27%;font-size: 20px" >DELIVERY TIME</th>
-              <th style="width:20%;font-size: 20px;color: red">ORDER PERCENT</th>
-              <th style="width:17%;font-size: 20px">REVIEWS</th>
-              <th style="width:23%;font-size: 20px;color: red" class="text-center">OFFER ZONE</th>
-          </tr>
-      </thead>
-  </table>
+{% load static %}
 
-<div style="height: 600px;width: 100%%">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+<div style="height: 100%;width: 100%;background-color: white">
+
+
+
+<div class="container" style="height: 1000px;border-color: blue;background-color:white">
+
+
+	<div class="col-md-12" style="background-color:none;border-radius:25px">
+		<div style="margin-left:1000px;margin-top: 30px">
+  <img src="{% static 'images/eatme.jpg' %}" alt="image1" height="90px" width="100px" />
+  </div>
+  <div style="margin-top:-45px">
+  <h2 style="color:#154360;text-align: left;margin-left: 40px;font-size:32px;text-transform: uppercase;">{{queryset.name}}</h2>
+  </div>
+</div>
+	
+<div class="row">
+	<div class="col-md-4" style="margin-top: -20px">
+		<p style="margin-left: 55px;font-size: 20px">Fresh and delicious meal</p>
+		 <img width="340px" height="320px" style="border-radius:70px" src="media/{{queryset.image}}" alt="NOt found">
+ <h2 style="color: #154360;font-size: 32px;color: black;"> Rs.{{queryset.price}}</h2>
+
+
+ <form class = "pull-right"action="{% url "add-to-cart" queryset.id %}" method="POST">
+       {% csrf_token %}
+       <input  class = "btn btn-info btn-block" type="submit" value="Add to cart">
+       <input class = "form-control" type="number" name="qty" value="1">
+       </form>
+
+
+</div>
+<div class="col-md-1"></div>
+
+<div class="col-md-7" style="float: left;">
+<h3 style="color: red;font-weight: bolder;">Descipton</h3>
+    <h3  style="color: black;"> {{queryset.description}}</h3>
+<h3 style="font-weight: bold;">Prepare Your Food</h3>
+<p style="color: red;font-size: 23px;font-weight: bold;">Expcted Delivery Time:10-15 mins.</p>
+<hr>
+
+ <img width="100px" height="100px" src="media/{{queryset.image}}" alt="NOt found">
+ <div style="margin-left:150px;margin-top:-110px;font-size: 20px">
+ 	<h3 style="font-weight: bold;font-size: 20px">REVIEWS</h3>
+ 	<p style="color: #F5B041">Lorraine Ball </p>
+                <p style="margin-top: -20px"> >>Had dinner with friends. Menu is perfect, something for everyone. Service was awesome and Jason was very accommodating. Will be back definitely!</p>
+<br>
+<p style="color: #F5B041">Vishwa Ajit </p>
+<p style="margin-top: -20px"> >>The Food we had enjoyed at the time of dinner. It was really delicious taste with great quality, everything had unique taste which we had ordered, nice arrangement and services from the staff while eating, we found nothing bad about this restaurant.</p>
+
+
+ </p>
+</div>
+       
+
+
+</div>
+
+
+</div>
+</div>
+<!--
+
+<div class="col-md-12" style="background-color:white;border-radius:25px">
+  <h2 style="color: #154360;text-align: left;margin-left: 40px">{{queryset.name}}</h2>
+	<div class="col-md-12"style="height: 500px;width: 35%;float: left;"> <img width="340px" height="320px" style="border-radius:70px" src="media/{{queryset.image}}" alt="NOt found">
+</div>
+<div class="col-md-12"style="width: 65%;height:175px;border-color:black;float:left;border-width: 5px;background-color:#ABEBC6;border-radius:40px">
+
+  <h2 style="color: #154360;font-size: 35px;text-align: right;">AAAA</h2>
+  <h2 style="color: #154360;font-size: 35px;color: black;margin-top: -25px;text-align: right;"> Rs.{{queryset.price}}</h2>
+
+  <h2 style="color: #154360;font-size: 35px;margin-top: -25px;text-align: right;">Delivery Time</h2>
+
+
+<div id="content" style="height:200px;background-color: white;">
+
+    <h3  style="color: #1F618D;"> {{queryset.description}}</h3>
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div> 
+
+
+<div style="height: 600px;width: 100%">
 
 	<div style="height: 500px;width: 30%;float: left;"> <img width="240px" height="240px" src="media/{{queryset.image}}" alt="NOt found">
-        <div style="width: 100%;margin-top: 15px;float: left;margin-left: -110px">
+
         <form class = "pull-right"action="{% url "add-to-cart" queryset.id %}" method="POST">
        {% csrf_token %}
        <input  class = "btn btn-info btn-block" type="submit" value="Add to cart">
        <input class = "form-control" type="number" name="qty" value="1">
        </form>
    </div>
-	</div>
+
     <div style="height: 500px;width: 70%;float: left;"><h2 style="color: #154360">{{queryset.name}}</h2>
      <h3 style="color: #1F618D"> {{queryset.description}}</h3>
      <p style="font-weight: bolder;color: black;text-align: right;font-size: 28px"> Rs.{{queryset.price}}</p>
-     </div> 
-      <!--<img width="150px" height="150px" src="media/{{queryset.image}}" alt="NOt found">
-     <form class = "pull-right" action="{% url "add-to-cart" queryset.id %}" method="POST">
-       {% csrf_token %}
-       <input  class = "btn btn-info btn-block" type="submit" value="Add to cart">
-       <input class = "form-control" type="number" name="qty" value="1">
-       </form>-->
-
-
+     </div>
         </div>
+
+-->
+
 
 {% endblock %}
